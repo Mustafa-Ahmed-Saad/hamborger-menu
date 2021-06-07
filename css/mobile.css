@@ -1,0 +1,160 @@
+:root {
+  --primary-color: rgba(15, 52, 96, 0.8);
+  --secondary-color: rgba(233, 69, 96, 0.9);
+  --overlay-color: rgba(22, 33, 62, 0.9);
+  --menu-speed: 0.75s; /* السرعة اللي المفروض تظهر بيها المينيو هديها المتغير دا */
+}
+
+#navbar .menu-wrap {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1;
+}
+
+#navbar .menu-wrap .toggle {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  opacity: 0;
+  z-index: 2; /* علشان يكون فوق */
+}
+
+#navbar .menu-wrap .hamburger {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60px;
+  height: 60px;
+  display: flex; /* علشان نبقي نقدر نخلي الديف اللي جواه يجي في النص */
+  justify-content: center;
+  align-items: center;
+  padding: 0.75rem;
+  transition: all 0.7s ease;
+}
+
+#navbar .menu-wrap .hamburger > div {
+  position: relative;
+  width: 100%;
+  height: 3px;
+  background: #fff;
+  transition: all 0.7s ease;
+}
+
+#navbar .menu-wrap .hamburger > div::before,
+#navbar .menu-wrap .hamburger > div::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background: #fff;
+  top: -10px;
+}
+
+#navbar .menu-wrap .hamburger > div::after {
+  top: 10px;
+}
+
+#navbar .menu-wrap .toggle:checked + .hamburger {
+  /* كدا علشان لما يحصل سيك للبوتوم يعمل التنسيقات في الاخ اللي يلية مباشرتا اللي واخد كلاس همبورجر ولازم يكون الديف اللي واخد كلاس همبورجر يكون يلي الانبوت دا مباشرتا */
+  /* علشان نجيب الديف الاخ اللي واخد كلاس همبورجر */
+  background: var(--secondary-color);
+  width: 100px;
+  height: 100px;
+  padding: 0 1rem 1rem 2.5rem;
+  border-bottom-left-radius: 100%;
+  box-shadow: 0px 0px 12px #000;
+  z-index: 1;
+}
+
+#navbar .menu-wrap .toggle:checked + .hamburger > div {
+  transform: rotate(135deg);
+}
+
+#navbar .menu-wrap .toggle:checked + .hamburger > div::before,
+#navbar .menu-wrap .toggle:checked + .hamburger > div::after {
+  top: 0;
+  transform: rotate(90deg);
+  transition: transform 0.7s;
+}
+
+#navbar .menu-wrap .toggle:checked:hover + .hamburger > div {
+  transform: rotate(225deg);
+}
+
+/* menu itself */
+#navbar .menu-wrap .menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+}
+
+#navbar .menu-wrap .menu > div {
+  background: var(--overlay-color);
+  width: 200vw;
+  height: 200vh;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none; /* فكدا هيتغاضي عن الويدث و الهايت بتعت الاب و ينفز الويدث و الهايت الفعلية اللي انا مديهالو هنا اللي هيا متين في اتش */
+  /* لحد هنا لية المنيو مش واخدة العرض كلو كدا من الاحرف لان الويدث و الهايت للاب انا ميدهم مية في المية و الدسبلاي فليكس فالديف لما اديلو ويدث و هيات 200 في اتش هيحسبها بالنسبة للمية في المية دي بتعت الويدث و الهايت بتعت الاب فعلشان اتغلب علي الموضوع دا ادي الفليكس نان للابد او الديف اللي انا عاوزة يكبر خالص لبيل */
+  transform: scale(0); /* السكليل دي علشان يقلصها خالص و يكمشها خالص فمتكونش باينة */
+  transition: all 0.5 ease;
+}
+
+#navbar .menu-wrap .menu > div > div {
+  text-align: center;
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+#navbar .menu-wrap .menu > div > div > ul {
+  display: block;
+}
+
+#navbar .menu-wrap .menu > div > div > ul > li {
+  padding: 1rem;
+  transition: all 0.5s ease-in-out;
+}
+
+#navbar .menu-wrap .menu > div > div > ul > li > a {
+  font-size: 1.5rem;
+  transition: all 0.4s ease-in-out;
+}
+
+#navbar .menu-wrap .menu > div > div > ul > li > a:hover {
+  background: none;
+  color: var(--secondary-color);
+}
+
+#navbar .menu-wrap .menu > div > div > ul > li:first-child > a {
+  background: none;
+}
+
+/* show menu */
+#navbar .menu-wrap .toggle:checked ~ .menu {
+  /* في حالة لو الانبوت معملو تشيك و انت عاوز تنسق الديف الاخ بس مش المباشر اللي واخد كلاس مينيو */
+  visibility: visible;
+}
+
+#navbar .menu-wrap .toggle:checked ~ .menu > div {
+  transform: scale(1);
+  transition: all var(--menu-speed) ease;
+}
+
+#navbar .menu-wrap .toggle:checked ~ .menu > div > div {
+  opacity: 1;
+  transition: all 0.5s 0.2s ease; /* اديلو ديلاي متاخر شوية علشان بعد ما الباك جراوند تظهر و يحصلها سكيل و توسع النص يبدا يكبر و يظهر فعلشان كدا اديتلو ديلاي اتنيت من عشرة ثانية */
+}
